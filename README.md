@@ -42,3 +42,5 @@ Which is an interesting file for reading while watching soap opera?
 Then, navigating to http://ctf.42barcelona.com:3319/../../../etc/passwd would be a potential test for a path traversal attack
 
   ![Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
+
+  
