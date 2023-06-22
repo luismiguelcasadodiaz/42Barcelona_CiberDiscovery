@@ -112,6 +112,8 @@ As the only way to revert a hash is to find a text that generates the same hash 
 
 When you know someting about the structure of what you are looking for you can accelate the discovery process.
 
+## Exercise one
+
 From the web [Cyber Chef] (https://gchq.github.io/CyberChef/) is possible to obtain a hash analysys that helps you reduce the search/reversal scope.
 
 ```
@@ -131,7 +133,7 @@ Tiger-128
 ```
 with this knowledge  i looked for [A MD5 reversal hash tool](https://www.md5online.org/md5-decrypt.html)
 
-
+## Exercise two 
 For the second exercise, a hash of 40 chars
 
 `c967d488512ab5559b446f97843de1be0d615088`
@@ -153,18 +155,18 @@ RIPEMD-160
 Tiger-160
 ```
 
-
+### First approach
 OSINT suggested that hashcat would be a good tool
 With this [Hashcat beginners guide] (https://resources.infosecinstitute.com/topic/hashcat-tutorial-beginners/) i started the job.
 
-Hashcat -h | grep 160 
+To know  hash modes available at Hashcat tool `Hashcat -h | grep 160` 
 | Mode      | Name                                                      |usage|
 |----------|------------------------------------------------------------|------|
-|   **6000 | RIPEMD-160                                                 | Raw Hash**|
+|   6000 | RIPEMD-160                                                 | Raw Hash|
 |    160 | HMAC-SHA1 (key = $salt)                                    | Raw Hash authenticated|
 |   1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server|
 
-[Examples of hashes by method]   (https://hashcat.net/wiki/doku.php?id=example_hashes)
+[Examples of hashes by method](https://hashcat.net/wiki/doku.php?id=example_hashes)
 
 After filtering by hash's length it seems that only a reduced set of hash methods generate a digest with a lenght of 40
 
@@ -193,13 +195,21 @@ In Slack channel, staff suggested us a word list to try with
 
 
 hashcat -m 100 -a 0 -S target.txt wordlist.txt
+
 hashcat -m 170 -a 0 -S target.txt wordlist.txt
+
 hashcat -m 300 -a 0 -S target.txt wordlist.txt
+
 hashcat -m 4500 -a 0 -S target.txt wordlist.txt
+
 hashcat -m 4700 -a 0 -S target.txt wordlist.txt
+
 hashcat -m 18500 -a 0 -S target.txt wordlist.txt
 
-gave me no results.
+
+Gave me no results.
+
+### Second approach
 
 I tested the alternative subject hinted **John the ripper**
 
