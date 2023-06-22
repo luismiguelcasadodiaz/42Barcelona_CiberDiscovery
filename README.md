@@ -199,3 +199,72 @@ hashcat -m 4700 -a 0 -S target.txt wordlist.txt
 hashcat -m 18500 -a 0 -S target.txt wordlist.txt
 
 gave me no results.
+
+I tested the alternative subject hinted **John the ripper**
+
+Inside an ubuntu virtualbox artifact i compiled,  from latest source version [folllowing instructions](https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL-UBUNTU) 
+
+my first try `./john   --wordlist=wordlist.txt   crack.txt` produced:
+
+```
+Warning: detected hash type "Raw-SHA1", but the string is also recognized as "Raw-SHA1-AxCrypt"
+Use the "--format=Raw-SHA1-AxCrypt" option to force loading these as that type instead
+Warning: detected hash type "Raw-SHA1", but the string is also recognized as "Raw-SHA1-Linkedin"
+Use the "--format=Raw-SHA1-Linkedin" option to force loading these as that type instead
+Warning: detected hash type "Raw-SHA1", but the string is also recognized as "ripemd-160"
+Use the "--format=ripemd-160" option to force loading these as that type instead
+Warning: detected hash type "Raw-SHA1", but the string is also recognized as "has-160"
+Use the "--format=has-160" option to force loading these as that type instead
+Warning: detected hash type "Raw-SHA1", but the string is also recognized as "raw-SHA1-opencl"
+Use the "--format=raw-SHA1-opencl" option to force loading these as that type instead
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA1 [SHA1 256/256 AVX2 8x])
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+0g 0:00:00:00 DONE (2023-06-22 20:43) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
+```
+
+testing all warnings...
+
+```
+./john  --wordlist=wordlist.txt  --format=Raw-SHA1-AxCrypt  crack.txt
+
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA1-AxCrypt [SHA1 256/256 AVX2 8x])
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+0g 0:00:00:00 DONE (2023-06-22 20:45) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
+Session completed.
+```
+
+```
+./john  --wordlist=wordlist.txt  --format=Raw-SHA1-Linkedin  crack.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA1-Linkedin [SHA1 256/256 AVX2 8x])
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+0g 0:00:00:00 DONE (2023-06-22 20:47) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
+```
+
+```
+./john  --wordlist=wordlist.txt  --format=ripemd-160  crack.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (ripemd-160, RIPEMD 160 [32/64])
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+0g 0:00:00:00 DONE (2023-06-22 20:47) 0g/s 225.0p/s 225.0c/s 225.0C/s liam..up2u
+Session completed.
+
+```
+
+```
+./john  --wordlist=wordlist.txt  --format=has-160  crack.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (has-160 [HAS-160 32/64])
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+0g 0:00:00:00 DONE (2023-06-22 20:48) 0g/s 180.0p/s 180.0c/s 180.0C/s liam..up2u
+Session completed.
+```
+
+I concluded that password was liamup2u
+
+[I hashed it again at] (http://www.sha1-online.com/) and i got the hash the subject proposes.
+
+
+
