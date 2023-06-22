@@ -158,10 +158,11 @@ OSINT suggested that hashcat would be a good tool
 With this [Hashcat beginners guide] (https://resources.infosecinstitute.com/topic/hashcat-tutorial-beginners/) i started the job.
 
 Hashcat -h | grep 160 
-
-   **6000 | RIPEMD-160                                                 | Raw Hash**
-    160 | HMAC-SHA1 (key = $salt)                                    | Raw Hash authenticated
-   1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server
+| Mode      | Name                                                      |usage|
+|----------|------------------------------------------------------------|------|
+|   **6000 | RIPEMD-160                                                 | Raw Hash**|
+|    160 | HMAC-SHA1 (key = $salt)                                    | Raw Hash authenticated|
+|   1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server|
 
 [Examples of hashes by method]   (https://hashcat.net/wiki/doku.php?id=example_hashes)
 
