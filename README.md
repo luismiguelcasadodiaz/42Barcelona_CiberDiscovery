@@ -99,7 +99,8 @@ What is this i found in first exercise?
 NDJCQ057YjQ1M182NF8xNV9jMDBsfQ==
 
 it is made wiht a charset that contains upper (A-Z) (26 chars) , lower(a-z) (26 chars) , numbers (0-9) (10 chars)  and '='
- 26 + 26 + 10 + 1 = 63, it is close to 64
-[](https://en.wikipedia.org/wiki/Base64)
+ 26 + 26 + 10 + 1 = 63, it is close to 64.
+ 
+[Una buena explicación de la codificacion Base 64](https://en.wikipedia.org/wiki/Base64)
  
 
