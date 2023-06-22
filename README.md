@@ -92,3 +92,14 @@ TRUE and TRUE.
 [Common injection for user password](https://sechow.com/bricks/docs/login-1.html)
 
 
+# Decoding
+I had to refresh the difference between charset and encoding.
+
+What is this i found in first exercise?
+NDJCQ057YjQ1M182NF8xNV9jMDBsfQ==
+
+it is made wiht a charset that contains upper (A-Z) (26 chars) , lower(a-z) (26 chars) , numbers (0-9) (10 chars)  and '='
+ 26 + 26 + 10 + 1 = 63, it is close to 64
+[](https://en.wikipedia.org/wiki/Base64)
+ 
+
