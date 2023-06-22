@@ -132,7 +132,11 @@ Tiger-128
 with this knowledge  i looked for [A MD5 reversal hash tool](https://www.md5online.org/md5-decrypt.html)
 
 
-For the second exercise, cyber chef hinted me with:
+For the second exercise, a hash of 40 chars
+
+`c967d488512ab5559b446f97843de1be0d615088`
+
+cyber chef hinted me with:
 
 ```
 Hash length: 40
@@ -158,3 +162,40 @@ Hashcat -h | grep 160
    **6000 | RIPEMD-160                                                 | Raw Hash**
     160 | HMAC-SHA1 (key = $salt)                                    | Raw Hash authenticated
    1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server
+
+[Examples of hashes by method]   (https://hashcat.net/wiki/doku.php?id=example_hashes)
+
+After filtering by hash's length it seems that only a reduced set of hash methods generate a digest with a lenght of 40
+
+|Hash-Mode	|Hash-Name|	Example	|Lenght|
+|-----------|---------|---------|------|
+|100	|SHA1	|b89eaac7e61417341b710b727768294d0e6a277b|	40|
+|170	|sha1(utf16le($pass))	|b9798556b741befdbddcbf640d1dd59d19b1e193|	40|
+|300	|MySQL4.1/MySQL5	|fcf7c1b8749cf99d88e5f34271d636178fb5d130|	40|
+|4500	|sha1(sha1($pass))	|3db9184f5da4e463832b086211af8d2314919951|	40|	
+|4700	|sha1(md5($pass))	|92d85978d884eb1d99a51652b1139c8279fa8663|	40|
+|6000	|RIPEMD-160	|012cb9b334ec1aeb71a9c8ce85586082467f7eb6|	40|
+|18500|	sha1(md5(md5($pass)))	|888a2ffcb3854fba0321110c5d0d434ad1aa2880|	40|
+
+In Slack channel, staff suggested us a word list to try with
+
+|**word**|
+|--------|
+|liam|
+|42|
+|barcelona|
+|up2u|
+|1978|
+|lion|
+|spain|
+|hacking|
+
+
+hashcat -m 100 -a 0 -S target.txt wordlist.txt
+hashcat -m 170 -a 0 -S target.txt wordlist.txt
+hashcat -m 300 -a 0 -S target.txt wordlist.txt
+hashcat -m 4500 -a 0 -S target.txt wordlist.txt
+hashcat -m 4700 -a 0 -S target.txt wordlist.txt
+hashcat -m 18500 -a 0 -S target.txt wordlist.txt
+
+gave me no results.
