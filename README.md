@@ -209,6 +209,10 @@ hashcat -m 18500 -a 0 -S target.txt wordlist.txt
 
 Gave me no results.
 
+Antonio Gull teached me that i had to repeat the argument wordlist.
+
+hashcat -m 100 -a 0 -S target.txt wordlist.txt
+
 ### Second approach
 
 I tested the alternative subject hinted **John the ripper**
@@ -275,10 +279,24 @@ Session completed.
 
 I wrongly concluded that password was liam and up2u. Eduard vendrell alerted me that it was imposiible to get an awswer so fast.
 
-He suffered same problem till he modified in jhon.conf the default wordlist file.
+He suffered same problem till he modified inside john.conf the default wordlist file.
 
-Apparently `--wordlist=wordlist.txt` does not work correctly.
+Apparently `--wordlist=wordlist.txt` does not work correctly form CLI.
 
+I tried again and got a tottaly differente output
+```
+./john   --format=raw-sha1   crack.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA1 [SHA1 256/256 AVX2 8x])
+Proceeding with single, rules:Single
+Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
+Almost done: Processing the remaining buffered candidate passwords, if any.
+Proceeding with wordlist:./wordlist.lst
+Enabling duplicate candidate password suppressor
+0g 0:00:00:01 DONE 2/3 (2023-06-23 13:10) 0g/s 15531p/s 15531c/s 15531C/s pain..Hacking38
+Proceeding with incremental:ASCII
+Disabling duplicate candidate password suppressor
+```
 
 
 [I hashed it again at] (http://www.sha1-online.com/) and i got the hash the subject proposes.
