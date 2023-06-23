@@ -159,26 +159,29 @@ Tiger-160
 OSINT suggested that hashcat would be a good tool
 With this [Hashcat beginners guide] (https://resources.infosecinstitute.com/topic/hashcat-tutorial-beginners/) i started the job.
 
-To know  hash modes available at Hashcat tool `Hashcat -h | grep 160` 
+To know  hash modes **available** at Hashcat tool `Hashcat -h | grep 160` 
 | Mode      | Name                                                      |usage|
 |----------|------------------------------------------------------------|------|
 |   6000 | RIPEMD-160                                                 | Raw Hash|
 |    160 | HMAC-SHA1 (key = $salt)                                    | Raw Hash authenticated|
 |   1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server|
 
-[Examples of hashes by method](https://hashcat.net/wiki/doku.php?id=example_hashes)
 
-After filtering by hash's length it seems that only a reduced set of hash methods generate a digest with a lenght of 40
+To know potential hash modes that suit the hash to decyper use `hashcat --show target.txt`
 
-|Hash-Mode	|Hash-Name|	Example	|Lenght|
-|-----------|---------|---------|------|
-|100	|SHA1	|b89eaac7e61417341b710b727768294d0e6a277b|	40|
-|170	|sha1(utf16le($pass))	|b9798556b741befdbddcbf640d1dd59d19b1e193|	40|
-|300	|MySQL4.1/MySQL5	|fcf7c1b8749cf99d88e5f34271d636178fb5d130|	40|
-|4500	|sha1(sha1($pass))	|3db9184f5da4e463832b086211af8d2314919951|	40|	
-|4700	|sha1(md5($pass))	|92d85978d884eb1d99a51652b1139c8279fa8663|	40|
-|6000	|RIPEMD-160	|012cb9b334ec1aeb71a9c8ce85586082467f7eb6|	40|
-|18500|	sha1(md5(md5($pass)))	|888a2ffcb3854fba0321110c5d0d434ad1aa2880|	40|
+The following 7 hash-modes match the structure of your input hash:
+
+      # | Name                                                       | Category
+  ======+============================================================+======================================
+    100 | SHA1                                                       | Raw Hash
+   6000 | RIPEMD-160                                                 | Raw Hash
+    170 | sha1(utf16le($pass))                                       | Raw Hash
+   4700 | sha1(md5($pass))                                           | Raw Hash salted and/or iterated
+  18500 | sha1(md5(md5($pass)))                                      | Raw Hash salted and/or iterated
+   4500 | sha1(sha1($pass))                                          | Raw Hash salted and/or iterated
+    300 | MySQL4.1/MySQL5                                            | Database Server
+
+
 
 In Slack channel, staff suggested us a word list to try with
 
@@ -194,24 +197,113 @@ In Slack channel, staff suggested us a word list to try with
 |hacking|
 
 
-hashcat -m 100 -a 0 -S target.txt wordlist.txt
+hashcat -m 100 -a 0  target.txt wordlist.txt
 
-hashcat -m 170 -a 0 -S target.txt wordlist.txt
+hashcat -m 170 -a 0  target.txt wordlist.txt
 
-hashcat -m 300 -a 0 -S target.txt wordlist.txt
+hashcat -m 300 -a 0  target.txt wordlist.txt
 
-hashcat -m 4500 -a 0 -S target.txt wordlist.txt
+hashcat -m 4500 -a 0  target.txt wordlist.txt
 
-hashcat -m 4700 -a 0 -S target.txt wordlist.txt
+hashcat -m 4700 -a 0  target.txt wordlist.txt
 
-hashcat -m 18500 -a 0 -S target.txt wordlist.txt
+hashcat -m 18500 -a 0  target.txt wordlist.txt
 
 
-Gave me no results.
+Gave me no results on Thursday
 
-Antonio Gull teached me that i had to repeat the argument wordlist.
+Antonio Gull, next day, teached me that i had to repeat the argument wordlist and change the attack mode from Straight (0) to combination(1)
 
-hashcat -m 100 -a 0 -S target.txt wordlist.txt
+`hashcat -m 100 -a 1 target.txt wordlist.txt wordlist.txt`
+
+```
+hashcat (v6.2.6) starting
+
+METAL API (Metal 212.8)
+=======================
+* Device #1: AMD Radeon Pro 570X, skipped
+
+OpenCL API (OpenCL 1.2 (Jun  8 2020 17:36:15)) - Platform #1 [Apple]
+====================================================================
+* Device #2: Intel(R) Core(TM) i5-8500 CPU @ 3.00GHz, 4064/8192 MB (1024 MB allocatable), 6MCU
+* Device #3: AMD Radeon Pro 570X Compute Engine, skipped
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Dictionary cache hit:
+* Filename..: wordlist.txt
+* Passwords.: 9
+* Bytes.....: 52
+* Keyspace..: 9
+
+Dictionary cache hit:
+* Filename..: wordlist.txt
+* Passwords.: 9
+* Bytes.....: 52
+* Keyspace..: 9
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+
+Optimizers applied:
+* Zero-Byte
+* Early-Skip
+* Not-Salted
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+* Raw-Hash
+
+ATTENTION! Pure (unoptimized) backend kernels selected.
+Pure kernels can crack longer passwords, but drastically reduce performance.
+If you want to switch to optimized kernels, append -O to your commandline.
+See the above message to find out about the exact limits.
+
+Watchdog: Temperature abort trigger set to 100c
+
+Host memory required for this attack: 1 MB
+
+Dictionary cache hit:
+* Filename..: wordlist.txt
+* Passwords.: 9
+* Bytes.....: 52
+* Keyspace..: 81
+
+The wordlist or mask that you are using is too small.
+This means that hashcat cannot use the full parallel power of your device(s).
+Unless you supply more work, your cracking speed will drop.
+For tips on supplying more work, see: https://hashcat.net/faq/morework
+
+Approaching final keyspace - workload adjusted.
+```
+c967d488512ab5559b446f97843de1be0d615088:**liamup2u**
+```
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 100 (SHA1)
+Hash.Target......: c967d488512ab5559b446f97843de1be0d615088
+Time.Started.....: Fri Jun 23 13:25:04 2023 (0 secs)
+Time.Estimated...: Fri Jun 23 13:25:04 2023 (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Base.......: File (wordlist.txt), Left Side
+Guess.Mod........: File (wordlist.txt), Right Side
+Speed.#2.........:   778.8 kH/s (0.01ms) @ Accel:512 Loops:9 Thr:1 Vec:4
+Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+Progress.........: 81/81 (100.00%)
+Rejected.........: 0/81 (0.00%)
+Restore.Point....: 0/9 (0.00%)
+Restore.Sub.#2...: Salt:0 Amplifier:0-9 Iteration:0-9
+Candidate.Engine.: Device Generator
+**Candidates.#2....: liamliam -> up2uup2u**
+Hardware.Mon.SMC.: Fan0: 44%
+Hardware.Mon.#2..: Temp: 46c
+
+Started: Fri Jun 23 13:25:01 2023
+Stopped: Fri Jun 23 13:25:06 2023
+```
+
+
 
 ### Second approach
 
@@ -300,6 +392,12 @@ Disabling duplicate candidate password suppressor
 
 
 [I hashed it again at] (http://www.sha1-online.com/) and i got the hash the subject proposes.
+
+hashcat --show target.txt
+
+
+
+<img width="992" alt="Screen Shot 2023-06-23 at 2 19 11 PM" src="https://github.com/luismiguelcasadodiaz/42Barcelona_CiberDiscovery/assets/19540140/9636223a-a4d0-45af-a3a4-01e86dabd70b">
 
 
 
