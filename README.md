@@ -1,20 +1,23 @@
-# 42Barcelona_CiberDiscoveryvery
+# 42Barcelona_CiberDiscovery
 
-In my first day, I discovered that the knolewdge kidnnaps us, and carries us thru the long way and blinds us towards short path.
+### I discovered that the knolewdge kidnnaps us and carries us thru the long way, blinding us towards short path.
 
 After long technical discussions involving nslookup, RFC, protocols, ports and so on, that took us to nowhere, the solution was the web **"instant username"**, a web used to know username availability in differente social media platforms.
 
 Another learning to take away was the usage of google lens to locate where, a photo with no gps metadata, has been shooted.
 
-#Directory listing and fuzzing
+## Directory listing and fuzzing
 
 Directory listing is an Apache configuraiton Directive that instruct web server to show folder content when there is not index.htm or index.php file. When such configuration directive is not properly configured a **fuzzing attack** can be performed. Fuzzing is the art of automatic bug detection. The goal of fuzzing is to stress the application and cause unexpected behavior, resource leaks, or crashes. The process involves throwing invalid, unexpected, or random data as inputs at a computer. In this case we will test different regular path after the fully qiialified server name.
 
-ctf.42barcelona.com:3318/admin
-ctf.42barcelona.com:3318/content
-ctf.42barcelona.com:3318/webdocs
+`ctf.42barcelona.com:3318/admin`
 
-#Path Traversal
+`ctf.42barcelona.com:3318/content`
+
+`ctf.42barcelona.com:3318/webdocs`
+
+
+## Path Traversal
 
 A **path traversal** vulnerability allows an attacker to access files on your web server to which they should not have access. They do this by tricking either the web server or the web application running on it into returning files that exist outside of the web root folder.
 
@@ -37,19 +40,19 @@ I can see that it is a Apache server running on Ubuntu.
 
 Which is the default Apache DocumentRoot folder?
 
-/var/www/html
+`/var/www/html`
 
 Which is an interesting file for reading while watching soap opera?
 
-/etc/passwd
+`/etc/passwd`
 
-Then, navigating to http://ctf.42barcelona.com:3319/../../../etc/passwd would be a potential test for a path traversal attack.
+Then, navigating to `http://ctf.42barcelona.com:3319/../../../etc/passwd` would be a potential test for a path traversal attack.....
 
 
-  [Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
+[Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
 
   
-#**sql injection** 
+## sql injection
 SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an answer that front-end will unknowingly run on server database an SQL statement that extract information towards the attackant.
 
 There is a potential dangers of using user input directly in in SQL statements.
@@ -92,7 +95,7 @@ TRUE and TRUE.
 [Common injection for user password](https://sechow.com/bricks/docs/login-1.html)
 
 
-# Decoding
+## Decoding
 I had to refresh the difference between charset and encoding.
 
 What is this i found in first exercise?
@@ -101,20 +104,20 @@ NDJCQ057YjQ1M182NF8xNV9jMDBsfQ==
 it is made wiht a charset that contains upper (A-Z) (26 chars) , lower(a-z) (26 chars) , numbers (0-9) (10 chars)  and '='
  26 + 26 + 10 + 1 = 63, it is close to 64.
  
-[Una buena explicación de la codificacion Base 64](https://en.wikipedia.org/wiki/Base64)
+[Are you ready to undesrtand bit by bit codification Base 64?](https://en.wikipedia.org/wiki/Base64)
 
-Gracias a Carlos Mosquera he aprendido a decodificar base64 con la línea de comandos
+Gracias a Carlos Mosquera he aprendido a decodificar desde hexadecimal y base64 con la línea de comandos
 
 `echo '4e 44 4a 43 51 30 35 37 59 6a 51 31 4d 31 38 32 4e 46 38 78 4e 56 39 6a 4d 44 42 73 58 32 4a 31 4e 31 39 6f 4d 33 68 66 4d 54 56 66 59 7a 41 77 62 44 4e 79 66 51 3d 3d' | xxd -r -p | base64 -d`
  
-# Hashing
+## Hashing
 As the only way to revert a hash is to find a text that generates the same hash i googled for some hint.
 
 When you know someting about the structure of what you are looking for you can accelate the discovery process.
 
-## Exercise one
+### Exercise one
 
-From the web [Cyber Chef] (https://gchq.github.io/CyberChef/) is possible to obtain a hash analysys that helps you reduce the search/reversal scope.
+From the web [Cyber Chef](https://gchq.github.io/CyberChef/) is possible to obtain a hash analysys that helps you reduce the search/reversal scope.
 
 ```
 
@@ -133,7 +136,7 @@ Tiger-128
 ```
 with this knowledge  i looked for [A MD5 reversal hash tool](https://www.md5online.org/md5-decrypt.html)
 
-## Exercise two 
+### Exercise two 
 For the second exercise, a hash of 40 chars
 
 `c967d488512ab5559b446f97843de1be0d615088`
@@ -155,9 +158,10 @@ RIPEMD-160
 Tiger-160
 ```
 
-### First approach
-OSINT suggested that hashcat would be a good tool
-With this [Hashcat beginners guide] (https://resources.infosecinstitute.com/topic/hashcat-tutorial-beginners/) i started the job.
+#### First approach
+OSINT suggested that hashcat would be a good tool.
+
+With this [Hashcat beginners guide](https://resources.infosecinstitute.com/topic/hashcat-tutorial-beginners/) i started the job.
 
 To know  hash modes **available** at Hashcat tool `Hashcat -h | grep 160` 
 | Mode      | Name                                                      |usage|
@@ -167,8 +171,11 @@ To know  hash modes **available** at Hashcat tool `Hashcat -h | grep 160`
 |   1600 | Apache $apr1$ MD5, md5apr1, MD5 (APR)                      | FTP, HTTP, SMTP, LDAP Server|
 
 
-To know potential hash modes that suit the hash to decyper use `hashcat --show target.txt`
+To know potential hash modes that suit the hash to decyper use:
 
+>hashcat --show target.txt
+
+```
 The following 7 hash-modes match the structure of your input hash:
 
       # | Name                                                       | Category
@@ -181,7 +188,7 @@ The following 7 hash-modes match the structure of your input hash:
    4500 | sha1(sha1($pass))                                          | Raw Hash salted and/or iterated
     300 | MySQL4.1/MySQL5                                            | Database Server
 
-
+```
 
 In Slack channel, staff suggested us a word list to try with
 
@@ -197,17 +204,17 @@ In Slack channel, staff suggested us a word list to try with
 |hacking|
 
 
-hashcat -m 100 -a 0  target.txt wordlist.txt
+> hashcat -m 100 -a 0  target.txt wordlist.txt
 
-hashcat -m 170 -a 0  target.txt wordlist.txt
+> hashcat -m 170 -a 0  target.txt wordlist.txt
 
-hashcat -m 300 -a 0  target.txt wordlist.txt
+> hashcat -m 300 -a 0  target.txt wordlist.txt
 
-hashcat -m 4500 -a 0  target.txt wordlist.txt
+> hashcat -m 4500 -a 0  target.txt wordlist.txt
 
-hashcat -m 4700 -a 0  target.txt wordlist.txt
+> hashcat -m 4700 -a 0  target.txt wordlist.txt
 
-hashcat -m 18500 -a 0  target.txt wordlist.txt
+> hashcat -m 18500 -a 0  target.txt wordlist.txt
 
 
 Gave me no results on Thursday
@@ -305,63 +312,16 @@ Stopped: Fri Jun 23 13:25:06 2023
 
 
 
-### Second approach
+#### Second approach
 
-I tested the alternative subject hinted **John the ripper**
+I tested with **John the ripper**, the alternative subject hinted.
 
 Inside an ubuntu virtualbox artifact i compiled,  from latest source version [folllowing instructions](https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL-UBUNTU) 
 
-my first try `./john   --wordlist=wordlist.txt   crack.txt` produced:
+my first try produced:
 
 ```
-Warning: detected hash type "Raw-SHA1", but the string is also recognized as "Raw-SHA1-AxCrypt"
-Use the "--format=Raw-SHA1-AxCrypt" option to force loading these as that type instead
-Warning: detected hash type "Raw-SHA1", but the string is also recognized as "Raw-SHA1-Linkedin"
-Use the "--format=Raw-SHA1-Linkedin" option to force loading these as that type instead
-Warning: detected hash type "Raw-SHA1", but the string is also recognized as "ripemd-160"
-Use the "--format=ripemd-160" option to force loading these as that type instead
-Warning: detected hash type "Raw-SHA1", but the string is also recognized as "has-160"
-Use the "--format=has-160" option to force loading these as that type instead
-Warning: detected hash type "Raw-SHA1", but the string is also recognized as "raw-SHA1-opencl"
-Use the "--format=raw-SHA1-opencl" option to force loading these as that type instead
-Using default input encoding: UTF-8
-Loaded 1 password hash (Raw-SHA1 [SHA1 256/256 AVX2 8x])
-Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
-0g 0:00:00:00 DONE (2023-06-22 20:43) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
-```
-
-testing all warnings...
-
-```
-./john  --wordlist=wordlist.txt  --format=Raw-SHA1-AxCrypt  crack.txt
-
-Using default input encoding: UTF-8
-Loaded 1 password hash (Raw-SHA1-AxCrypt [SHA1 256/256 AVX2 8x])
-Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
-0g 0:00:00:00 DONE (2023-06-22 20:45) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
-Session completed.
-```
-
-```
-./john  --wordlist=wordlist.txt  --format=Raw-SHA1-Linkedin  crack.txt
-Using default input encoding: UTF-8
-Loaded 1 password hash (Raw-SHA1-Linkedin [SHA1 256/256 AVX2 8x])
-Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
-0g 0:00:00:00 DONE (2023-06-22 20:47) 0g/s 180.0p/s 180.0c/s 180.0C/s up2u
-```
-
-```
-./john  --wordlist=wordlist.txt  --format=ripemd-160  crack.txt
-Using default input encoding: UTF-8
-Loaded 1 password hash (ripemd-160, RIPEMD 160 [32/64])
-Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
-0g 0:00:00:00 DONE (2023-06-22 20:47) 0g/s 225.0p/s 225.0c/s 225.0C/s liam..up2u
-Session completed.
-
-```
-
-```
-./john  --wordlist=wordlist.txt  --format=has-160  crack.txt
+./john  --wordlist=wordlist.txt  --format=raw-sha1  crack.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (has-160 [HAS-160 32/64])
 Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
@@ -369,7 +329,10 @@ Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
 Session completed.
 ```
 
-I wrongly concluded that password was liam and up2u. Eduard vendrell alerted me that it was imposiible to get an awswer so fast.
+I **wrongly concluded** that password was liam and up2u. 
+What i saw `liam..up2u` was the first and the last word form the wordlist.
+
+Eduard vendrell alerted me that it was imposible to get an awswer so fast.
 
 He suffered same problem till he modified inside john.conf the default wordlist file.
 
@@ -388,16 +351,30 @@ Enabling duplicate candidate password suppressor
 0g 0:00:00:01 DONE 2/3 (2023-06-23 13:10) 0g/s 15531p/s 15531c/s 15531C/s pain..Hacking38
 Proceeding with incremental:ASCII
 Disabling duplicate candidate password suppressor
+liamup2u         (?)
+1g 0:01:00:46 DONE 3/3 (2023-06-23 14:11) 0g/s 26302Kp/s 26302Kc/s 26302KC/s liamup20..liamup2x
+Use the "--show --format=Raw-SHA1" options to display all of the cracked passwords reliably
+Session completed.
 ```
 
+Cracks of hash are kept in a pot you can review wiht `./john --show crack.txt`
+
+```
+?:liamup2u
+
+1 password hash cracked, 0 left
 
 [I hashed it again at] (http://www.sha1-online.com/) and i got the hash the subject proposes.
 
-hashcat --show target.txt
+```
 
+# Conclusion.
 
+Four and a half days later i conclude de Discovery Piscine cibersecurity.
 
-<img width="992" alt="Screen Shot 2023-06-23 at 2 19 11 PM" src="https://github.com/luismiguelcasadodiaz/42Barcelona_CiberDiscovery/assets/19540140/9636223a-a4d0-45af-a3a4-01e86dabd70b">
+New friends, new knowledge, willing to start the real piscine 3rd July 2023.
+
+<img width="992" alt="Holy Graph" src="https://github.com/luismiguelcasadodiaz/42Barcelona_CiberDiscovery/assets/19540140/9636223a-a4d0-45af-a3a4-01e86dabd70b">
 
 
 
