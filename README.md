@@ -273,7 +273,13 @@ Press 'q' or Ctrl-C to abort, 'h' for help, almost any other key for status
 Session completed.
 ```
 
-I concluded that password was liamup2u
+I wrongly concluded that password was liam and up2u. Eduard vendrell alerted me that it was imposiible to get an awswer so fast.
+
+He suffered same problem till he modified in jhon.conf the default wordlist file.
+
+Apparently `--wordlist=wordlist.txt` does not work correctly.
+
+
 
 [I hashed it again at] (http://www.sha1-online.com/) and i got the hash the subject proposes.
 
