@@ -4,17 +4,18 @@ With this readme, I want to summarize my learnings during this week of activity 
 
 There were also some interesting presentations.
 
-[Listing]()
+[Listing](#listing)
 
-[Traversal Path]()
+[Traversal Path](#traversal)
 
-[SQL Injection](##-SQL-injection)
+[SQL Injection](#injection)
 
 [Decoding](#decoding)
 
-[Unhashing]()
+[Unhashing](#hashing)
 
-[Articles to read]()
+[Articles to read](#links)
+[Conclusion](#conclusion)
 
 
 
@@ -26,7 +27,7 @@ There were also some interesting presentations.
 After long technical discussions involving nslookup, RFC, protocols, ports, and so on, that took us nowhere, the solution was the web **"instant username"**, a web used to know username availability in different social media platforms.
 
 Another learning to take away was the usage of google lens to locate where, a photo with no GPS metadata, has been shot.
-
+<a name="listing"></a>
 ## Directory listing and fuzzing
 
 Directory listing is an Apache configuration Directive that instructs the web server to show folder content when there is no index.htm or index.php file. When such a configuration directive is not properly configured a **fuzzing attack** can be performed. Fuzzing is the art of automatic bug detection. The goal of fuzzing is to stress the application and cause unexpected behavior, resource leaks, or crashes. The process involves throwing invalid, unexpected, or random data as inputs at a computer. In this case we will test different regular paths after the fully qualified server name.
@@ -37,7 +38,7 @@ Directory listing is an Apache configuration Directive that instructs the web se
 
 `ctf.42barcelona.com:3318/webdocs`
 
-
+<a name="traversal"></a>
 ## Path Traversal
 
 A **path traversal** vulnerability allows an attacker to access files on your web server to which they should not have access. They do this by tricking either the web server or the web application running on it into returning files that exist outside of the web root folder.
@@ -72,7 +73,7 @@ Then, navigating to `http://ctf.42barcelona.com:3319/../../../etc/passwd` would 
 
 [Deeper knowledge Path traversal and a prevention technic.](https://portswigger.net/web-security/file-path-traversal)
 
-  
+<a name="injection"></a>  
 ## SQL injection
 SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an answer that the front-end will unknowingly run on the server database an SQL statement that extracts information towards the attacker.
 
@@ -131,6 +132,7 @@ Gracias a Carlos Mosquera he aprendido a decodificar desde hexadecimal y base64 
 
 `echo '4e 44 4a 43 51 30 35 37 59 6a 51 31 4d 31 38 32 4e 46 38 78 4e 56 39 6a 4d 44 42 73 58 32 4a 31 4e 31 39 6f 4d 33 68 66 4d 54 56 66 59 7a 41 77 62 44 4e 79 66 51 3d 3d' | xxd -r -p | base64 -d`
  
+<a name="hashing"></a>
 ## Hashing
 As the only way to revert a hash is to find a text that generates the same hash I googled for some hint.
 
@@ -389,8 +391,26 @@ Cracks of hash are kept in a pot you can review with `./john --show crack.txt`
 
 ```
 
+<a name="links"></a>
+
+# Links
+
+[SQL Injection Cheat Sheet](https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/)
+[More CTF challenges](https://picoctf.org/)
+
+# Events
+## AI
+[AI models to test it.](https://huggingface.co/models)
+[AI Hands-on experiments](https://web.learningml.org/en/home-spanish-en-translation/)
+[Python sintetic images generator](https://huggingface.co/stabilityai/stable-diffusion-2-1-base)
+[Tesla Breaks failure](https://www.youtube.com/watch?v=6Kf3I_OyDlI&t=2s)
+[On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?](https://dl.acm.org/doi/pdf/10.1145/3442188.3445922)
+
+GPT-3 has 175 000 000 000 parameters with a dataset size of 570 GB.
 
 
+
+<a name="conclusion"></a>
 # Conclusion.
 
 Four and a half days later I conclude de Discovery Piscine cybersecurity.
