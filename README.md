@@ -10,7 +10,7 @@ There were also some interesting presentations.
 
 [SQL Injection](##-SQL-injection)
 
-[Decoding](#-Decoding)
+[Decoding](#decoding)
 
 [Unhashing]()
 
@@ -115,7 +115,7 @@ TRUE and TRUE.
 
 [Common injection for user password](https://sechow.com/bricks/docs/login-1.html)
 
-
+<a name="decoding"></a>
 ## Decoding
 I had to refresh the difference between charset and encoding.
 
