@@ -400,11 +400,16 @@ Cracks of hash are kept in a pot you can review with `./john --show crack.txt`
 
 # Events
 ## AI
-[AI models to test it.](https://huggingface.co/models)
-[AI Hands-on experiments](https://web.learningml.org/en/home-spanish-en-translation/)
-[Python sintetic images generator](https://huggingface.co/stabilityai/stable-diffusion-2-1-base)
-[Tesla Breaks failure](https://www.youtube.com/watch?v=6Kf3I_OyDlI&t=2s)
-[On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?](https://dl.acm.org/doi/pdf/10.1145/3442188.3445922)
++ [AI models to test it.](https://huggingface.co/models)
+
++ [AI Hands-on experiments](https://web.learningml.org/en/home-spanish-en-translation/)
+
++ [Python sintetic images generator](https://huggingface.co/stabilityai/stable-diffusion-2-1-base)
+
++ [Tesla Breaks failure](https://www.youtube.com/watch?v=6Kf3I_OyDlI&t=2s)
+
++ [On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?](https://dl.acm.org/doi/pdf/10.1145/3442188.3445922)
+
 
 GPT-3 has 175 000 000 000 parameters with a dataset size of 570 GB.
 
